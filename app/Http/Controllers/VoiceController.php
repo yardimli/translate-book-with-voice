@@ -2,6 +2,7 @@
 
 	namespace App\Http\Controllers;
 
+	use App\Models\SaveText;
 	use CURLFile;
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Facades\Log;
@@ -9,6 +10,29 @@
 
 	class VoiceController extends Controller
 	{
+
+
+		function saveText(Request $request)
+		{
+			$request->validate([
+				'paragraph_number' => 'required|string',
+//				'paragraph_text' => 'required|string',
+			]);
+
+			SaveText::updateOrCreate(
+				['paragraph_number' => $request->paragraph_number],
+				['paragraph_text' => $request->paragraph_text]
+			);
+
+			return response()->json(['success' => true]);
+		}
+
+		function getText($paragraphNumber)
+		{
+			$text = SaveText::where('paragraph_number', $paragraphNumber)->first();
+
+			return response()->json($text ? $text : ['error' => 'Text not found']);
+		}
 
 
 		function save_audio(Request $request)

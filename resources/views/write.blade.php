@@ -39,29 +39,30 @@
 <div style="width: 100vw; max-width: 1280px; margin:0 auto; height: 100vh; overflow: hidden;">
 	<div class="row">
 		<div class="col-6">
+			
+			<div style="min-height: 140px; max-height: 140px; height: 140px; border: 1px solid #aaa; border-radius: 6px; overflow: auto;" class="mt-2 p-2 " id="prevParagraphText">
+			
+			</div>
+			
+			<textarea class="form-control mt-2" id="textareaInput" rows="10" placeholder="Enter text here..."
+			          style="height: calc(100vh - 300px); resize: none;"></textarea>
+			
 			<div class="mb-1 mt-1">
 				<div id="recognitionHistory" class="container border border-primary overflow-auto mb-2"
 				     style="position:relative; height: 75px; max-height: 75px;">
 					<div id="startHint"
 					     style="position:absolute; top: 4px; left:10px; font-weight: bold; font-size:15px; text-align: left;">
-						Kayda baslamak ve bitirmek icin Tıkla veya Space'e bas! <br> Paragraf secmek icin "Paragraf 55" deyin. <br> Son eklemeyi silmek icin "son kaydı sil" deyin.
+						Başlamak ve bitirmek için tıklayın ya da boşluk tuşuna basın! Paragraf seçmek istiyorsanız, "Paragraf 55" gibi bir komut kullanın. En son eklenen kısmı silmek için "son kaydı sil", "son satırı sil" veya "geri al" ifadelerinden birini kullanın.
 					</div>
 				</div>
 				
-				
-				<div class="progress mb-2">
-					<div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
-					     role="progressbar" aria-valuenow="0" style="width: 0%"
-					     aria-valuemin="0" aria-valuemax="10" id='SendWaitProgressBar'>
-					</div>
-				</div>
 				
 				<button class="btn btn-primary" id="startRecordingButton">Kayda Başla</button>
-				<button class="btn btn-primary" id="langBtn">Türkçe</button>
+				<button class="btn btn-danger" id="langBtn">Türkçe</button>
+
+				<button class="btn btn-primary" id="saveBtn">Sakla</button>
+				<button class="btn btn-secondary" id="exportBtn">Dışa Aktar</button>
 			</div>
-			
-			<textarea class="form-control" id="textareaInput" rows="10" placeholder="Enter text here..."
-			          style="height: calc(100vh - 170px); resize: none;"></textarea>
 		</div>
 		<div class="col-6">
 			<div class="docx-content" id="docx-content"

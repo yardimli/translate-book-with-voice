@@ -31,7 +31,8 @@
 
 	Route::get('/write', [DocxViewController::class, 'show'])->name('page.write');
 	Route::post('/save-audio', [VoiceController::class, 'save_audio'])->name('save-audio');
-
+	Route::post('/save-text', [VoiceController::class, 'saveText'])->name('save-text');
+	Route::get('/get-text/{paragraphNumber}', [VoiceController::class, 'getText'])->name('get-text');
 
 	Route::get('/write-with-chunks', [DocxViewController::class, 'show'])->name('page.write-with-chunks');
 
