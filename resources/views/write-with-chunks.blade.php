@@ -19,7 +19,7 @@
 	<!-- Chess JS (slightly modified) -->
 	<script src="{{ asset('voice/opus/OpusMediaRecorder.umd.js') }}"></script>
 	<script src="{{ asset('voice/opus/encoderWorker.umd.js') }}"></script>
-	<script src="{{ asset('voice/js/opus-recorder.js') }}"></script>
+	<script src="{{ asset('voice/js/opus-recorder-with-chunks.js') }}"></script>
 	
 	
 	{{--  Custom JS  --}}
@@ -43,8 +43,8 @@
 				<div id="recognitionHistory" class="container border border-primary overflow-auto mb-2"
 				     style="position:relative; height: 75px; max-height: 75px;">
 					<div id="startHint"
-					     style="position:absolute; top: 4px; left:10px; font-weight: bold; font-size:15px; text-align: left;">
-						Kayda baslamak ve bitirmek icin Tıkla veya Space'e bas! <br> Paragraf secmek icin "Paragraf 55" deyin. <br> Son eklemeyi silmek icin "son kaydı sil" deyin.
+					     style="position:absolute; top: 14px; left:10px; font-weight: bold; font-size:30px; text-align: center;">
+						Başlamak icin Tıkla!
 					</div>
 				</div>
 				

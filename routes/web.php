@@ -1,26 +1,40 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+	use App\Http\Controllers\DocxViewController;
+	use App\Http\Controllers\HomeController;
+	use App\Http\Controllers\VoiceController;
+	use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+	/*
+	|--------------------------------------------------------------------------
+	| Web Routes
+	|--------------------------------------------------------------------------
+	|
+	| Here is where you can register web routes for your application. These
+	| routes are loaded by the RouteServiceProvider and all of them will
+	| be assigned to the "web" middleware group. Make something great!
+	|
+	*/
 
-Route::get('/', function () {
-    return view('welcome');
-});
+	Route::get('/', function () {
+		return view('welcome');
+	});
 
-Auth::routes();
+	Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+	Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/bootstrap-jquery-test', function () {
+	Route::get('/bootstrap-jquery-test', function () {
 		return view('bootstrap-jquery-test');
-});
+	});
+
+
+	Route::get('/write', [DocxViewController::class, 'show'])->name('page.write');
+	Route::post('/save-audio', [VoiceController::class, 'save_audio'])->name('save-audio');
+
+
+	Route::get('/write-with-chunks', [DocxViewController::class, 'show'])->name('page.write-with-chunks');
+
+	Route::post('/save-audio-with-chunks', [VoiceController::class, 'save_audio_with_chunks'])->name('save-audio-with-chunks');
+	Route::post('/save-audio-long-with-chunks', [VoiceController::class, 'save_audio_long_with_chunks'])->name('save-audio-long-with-chunks');
+
