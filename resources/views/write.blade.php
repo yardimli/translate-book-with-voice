@@ -17,6 +17,9 @@
 	<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
 	
 	<!-- Chess JS (slightly modified) -->
+	<script>
+		var website_url = "{{env('APP_URL')}}";
+	</script>
 	<script src="{{ asset('voice/opus/OpusMediaRecorder.umd.js') }}"></script>
 	<script src="{{ asset('voice/opus/encoderWorker.umd.js') }}"></script>
 	<script src="{{ asset('voice/js/opus-recorder.js') }}"></script>

@@ -1,7 +1,7 @@
 // Non-standard options
 const workerOptions = {
-	OggOpusEncoderWasmPath: '/voice/opus/OggOpusEncoder.wasm',
-	WebMOpusEncoderWasmPath: '/voice/opus/WebMOpusEncoder.wasm'
+	OggOpusEncoderWasmPath: website_url+'/voice/opus/OggOpusEncoder.wasm',
+	WebMOpusEncoderWasmPath: website_url+'/voice/opus/WebMOpusEncoder.wasm'
 };
 
 // Polyfill MediaRecorder
