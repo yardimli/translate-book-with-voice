@@ -18,7 +18,7 @@
 			Session()->put('base_filename', 'combined_' . time());
 			session_write_close();
 
-			$file = public_path('docx/Grenser_Borders_Roy Jacobsen.docx'); // Ensure you have example.docx in your public folder
+			$file = public_path('docx/Grenser_Borders.docx'); // Ensure you have example.docx in your public folder
 
 			// Convert .docx to HTML
 			Settings::setOutputEscapingEnabled(true);
