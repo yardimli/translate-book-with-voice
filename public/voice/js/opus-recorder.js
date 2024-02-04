@@ -255,8 +255,9 @@ function loadLastInsertedData(paragraphNumber) {
 	
 }
 
-
-
+function exportText() {
+	window.open('/export-text', '_blank');
+}
 //---------------------------------------------------
 // Main
 $(document).ready(function () {
@@ -278,6 +279,7 @@ $(document).ready(function () {
 			$("#startRecordingButton").click();
 		}
 	});
+
 	
 	$(".book-text").on('click', function () {
 		let paragraphNumber = $(this).data('pa-number');

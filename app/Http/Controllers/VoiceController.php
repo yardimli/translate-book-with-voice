@@ -35,6 +35,31 @@
 		}
 
 
+		public function exportText()
+		{
+			$texts = SaveText::orderBy('paragraph_number', 'asc')->get();
+
+			$formattedText = $texts->reduce(function ($carry, $item) {
+				$paragraphText = str_replace("\n", '<br>', $item->paragraph_text);
+				return $carry . "<p>{$paragraphText}</p>";
+			}, '');
+
+			// If you prefer to use a view
+			// return view('exportText', ['formattedText' => $formattedText]);
+
+			// For simplicity, returning direct HTML
+			return response("<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>Exported Text</title>
+    </head>
+    <body>{$formattedText}</body>
+    </html>");
+		}
+
+
 		function save_audio(Request $request)
 		{
 			if ($request->hasFile('file')) {

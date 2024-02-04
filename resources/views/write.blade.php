@@ -61,7 +61,7 @@
 				<button class="btn btn-danger" id="langBtn">Türkçe</button>
 
 				<button class="btn btn-primary" id="saveBtn">Sakla</button>
-				<button class="btn btn-secondary" id="exportBtn">Dışa Aktar</button>
+				<button class="btn btn-secondary" id="exportBtn" onclick="exportText()">Dışa Aktar</button>
 			</div>
 		</div>
 		<div class="col-6">
