@@ -88,10 +88,9 @@ function createMediaRecorder(stream) {
 						} else if (responseTextCommand.indexOf('paragraf') === 0 || responseTextCommand.indexOf('paragraph') === 0) {
 							console.log("COMMAND: go to paragraph");
 							let paragraphNumber = responseTextCommand.split('paragraf')[1].trim();
-							currentEditingParagraph = parseInt(paragraphNumber);
-							scrollToPA(currentEditingParagraph);
+							scrollToPA(paragraphNumber);
 							$("#textareaInput").val('');
-							loadLastInsertedData(currentEditingParagraph);
+							loadLastInsertedData(paragraphNumber);
 							
 						} else {
 							console.log("COMMAND: add text");
@@ -161,6 +160,8 @@ function scrollToPA(number) {
 	if ($pa.length) {
 		// Change background color to yellow
 		$pa.css('background-color', 'yellow');
+		currentEditingParagraph = parseInt(number);
+		$("#writing-paragraph-hint").text("Etkin Paragraf: " + currentEditingParagraph);
 		
 		// Calculate the position to scroll to
 		// It's the offset of the paragraph relative to the container top minus the container's current scrollTop
@@ -269,7 +270,7 @@ $(document).ready(function () {
 		$("#textareaInput").val('');
 		
 		loadLastInsertedData(1);
-	}, 1000);
+	}, 500);
 	
 	
 	//make space key press startRecordingButton

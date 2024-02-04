@@ -65,6 +65,7 @@
 
 				<button class="btn btn-primary" id="saveBtn">Sakla</button>
 				<button class="btn btn-secondary" id="exportBtn" onclick="exportText()">Dışa Aktar</button>
+				<span id="writing-paragraph-hint">Etkin Paragraf: 1</span>
 			</div>
 		</div>
 		<div class="col-6">
