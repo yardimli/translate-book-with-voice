@@ -75,12 +75,14 @@ function createMediaRecorder(stream) {
 							$("#textareaInput").val(currentText + '\n');
 							
 							additionsHistory.push($("#textareaInput").val());
+							autoSave();
 							
 						} else if (responseTextCommand === 'son kaydı sil' || responseTextCommand === 'son satırı sil' || responseTextCommand === 'geri al' || responseTextCommand === 'undo' || responseTextCommand === 'delete last line' || responseTextCommand === 'delete last' || responseTextCommand === 'delete last line' || responseTextCommand === 'delete last paragraph') {
 							console.log("COMMAND: undo");
 							if (additionsHistory.length > 0) {
 								additionsHistory.pop();
 								$("#textareaInput").val(additionsHistory[additionsHistory.length - 1]);
+								autoSave();
 							}
 							
 						} else if (responseTextCommand.indexOf('paragraf') === 0 || responseTextCommand.indexOf('paragraph') === 0) {
@@ -94,8 +96,9 @@ function createMediaRecorder(stream) {
 						} else {
 							console.log("COMMAND: add text");
 							$("#textareaInput").val(currentText + ' ' + responseText);
-							
 							additionsHistory.push($("#textareaInput").val());
+							
+							autoSave();
 						}
 					} else {
 						$("#recognitionHistory").prepend(`<span>silence is golden.</span><br>`);
@@ -188,12 +191,11 @@ function autoSave() {
 		return;
 	}
 	
-	$("#saveButton").text("Saving...");
-	let paragraphNumber = currentEditingParagraph; // Assuming you have a variable keeping track of this
+	$("#saveBtn").text("Saklaniyor...");
 	
 	// Prepare the data to be sent
 	let data = {
-		paragraph_number: paragraphNumber,
+		paragraph_number: currentEditingParagraph,
 		paragraph_text: text,
 		_token: $('meta[name="csrf-token"]').attr('content') // Include CSRF token
 	};
@@ -205,12 +207,12 @@ function autoSave() {
 		success: function(response) {
 			console.log('Auto-saved successfully');
 			lastSavedText = text;
-			$("#saveButton").text("Save");
+			$("#saveBtn").text("Sakla");
 			// Optionally update the UI to inform the user of the save
 		},
 		error: function(xhr, status, error) {
 			console.error('Error auto-saving:', error);
-			$("#saveButton").text("Save");
+			$("#saveBtn").text("Sakla");
 			$("#recognitionHistory").prepend(`<span>Auto-save failed.</span><br>`);
 			$("#recognitionHistory").prepend(`<span>${error}</span><br>`);
 		}
@@ -224,7 +226,7 @@ function loadLastInsertedData(paragraphNumber) {
 		success: function(response) {
 			if (response.paragraph_text) {
 				$("#textareaInput").val(response.paragraph_text);
-				currentEditingParagraph = paragraphNumber; // Update the current editing paragraph
+				lastSavedText = response.paragraph_text;
 			}
 		},
 		error: function(xhr, status, error) {
@@ -262,9 +264,6 @@ function exportText() {
 // Main
 $(document).ready(function () {
 	
-	// Interval to auto-save every 10 seconds
-	setInterval(autoSave, 10000);
-	
 	setTimeout(function () {
 		scrollToPA(1);
 		$("#textareaInput").val('');
@@ -280,6 +279,10 @@ $(document).ready(function () {
 		}
 	});
 
+	
+	$("#saveBtn").on('click', function () {
+		autoSave();
+	});
 	
 	$(".book-text").on('click', function () {
 		let paragraphNumber = $(this).data('pa-number');
