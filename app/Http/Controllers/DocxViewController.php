@@ -73,7 +73,7 @@
 				foreach ($section->getElements() as $element) {
 					if (method_exists($element, 'getText')) {
 						$paragraph_count++;
-						$text .= "<div style='cursor:pointer;' class='book-text' data-pa-number=\"" . $paragraph_count . "\"><p><div style='font-weight: bold; text-align: right;'>PA #" . $paragraph_count . "</div>" . $element->getText() . "</p></div>\n";
+						$text .= "<div style='cursor:pointer;' class='book-text' data-pa-number=\"" . $paragraph_count . "\"><p><div style='font-weight: bold; text-align: right;'>PA #" . $paragraph_count . "</div>" . $element->getText() . "</p><p id='translated_text_". $paragraph_count ."'></p></div>\n";
 					}
 				}
 			}

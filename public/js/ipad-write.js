@@ -176,6 +176,7 @@ function loadParagraphData(paragraphNumber) {
 		type: 'GET',
 		success: function (response) {
 			disableAutoSave = false;
+			$("#translated_text_"+(paragraphNumberInt)).html('');
 			if (response.error) {
 				$("#textareaInput").val('');
 			} else if (response.paragraph_text) {
@@ -199,13 +200,11 @@ function loadParagraphData(paragraphNumber) {
 			success: function (response) {
 				disableAutoSave = false;
 				if (response.error) {
-					$("#prevParagraphText").html('');
+					$("#translated_text_"+(paragraphNumberInt - 1)).html('');
 				} else if (response.paragraph_text) {
 					let prevText = response.paragraph_text;
 					prevText = prevText.replace(/\n/g, '<br>');
-					$("#prevParagraphText").html(prevText);
-					//scroll to bottom of the div
-					$("#prevParagraphText").scrollTop($("#prevParagraphText")[0].scrollHeight);
+					$("#translated_text_"+(paragraphNumberInt - 1)).html(prevText);
 				}
 			},
 			error: function (xhr, status, error) {
@@ -215,7 +214,7 @@ function loadParagraphData(paragraphNumber) {
 			}
 		});
 	} else {
-		$("#prevParagraphText").html('');
+		$("#translated_text_"+(paragraphNumberInt - 1)).html('');
 	}
 	
 }

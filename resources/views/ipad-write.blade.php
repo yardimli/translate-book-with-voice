@@ -39,10 +39,6 @@
 	<div class="row">
 		<div class="col-6">
 			
-			<div style="min-height: 140px; max-height: 140px; height: 140px; border: 1px solid #aaa; border-radius: 6px; overflow: auto;" class="mt-2 p-2 " id="prevParagraphText">
-			
-			</div>
-			
 			<div class="mb-1 mt-1">
 				<button class="btn btn-primary" id="undoBtn">Geri Al</button>
 				<button class="btn btn-primary" id="saveBtn">Sakla</button>
@@ -55,8 +51,10 @@
 			</div>
 			
 			
+			<div class="ms-1 mt-1">
 			<textarea class="form-control mt-2" id="textareaInput" rows="10" placeholder="Buraya metin girin..."
-			          style="height: calc(100vh - 300px); resize: none;"></textarea>
+			          style="height: calc(100vh - 100px); resize: none;"></textarea>
+			</div>
 			
 		</div>
 		<div class="col-6">
