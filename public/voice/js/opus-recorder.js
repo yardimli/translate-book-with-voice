@@ -225,6 +225,9 @@ function loadLastInsertedData(paragraphNumber) {
 		url: '/get-text/' + paragraphNumber,
 		type: 'GET',
 		success: function(response) {
+			if (response.error) {
+				$("#textareaInput").val('');
+			} else
 			if (response.paragraph_text) {
 				$("#textareaInput").val(response.paragraph_text);
 				lastSavedText = response.paragraph_text;
@@ -242,8 +245,13 @@ function loadLastInsertedData(paragraphNumber) {
 			url: '/get-text/' + (paragraphNumberInt-1),
 			type: 'GET',
 			success: function (response) {
+				if (response.error) {
+					$("#prevParagraphText").html('');
+				} else
 				if (response.paragraph_text) {
-					$("#prevParagraphText").html(response.paragraph_text);
+					let prevText = response.paragraph_text;
+					prevText = prevText.replace(/\n/g, '<br>');
+					$("#prevParagraphText").html(prevText);
 					//scroll to bottom of the div
 					$("#prevParagraphText").scrollTop($("#prevParagraphText")[0].scrollHeight);
 				}

@@ -15,13 +15,14 @@
 		function saveText(Request $request)
 		{
 			$request->validate([
-				'paragraph_number' => 'required|string',
+				'paragraph_number' => 'required|integer',
 //				'paragraph_text' => 'required|string',
 			]);
+			Log::info('saveText called with paragraph_number: ' . $request->paragraph_number . ' and paragraph_text: ' . $request->paragraph_text);
 
-			SaveText::updateOrCreate(
-				['paragraph_number' => $request->paragraph_number],
-				['paragraph_text' => $request->paragraph_text]
+			SaveText::Create(
+				['paragraph_number' => $request->paragraph_number,
+					'paragraph_text' => $request->paragraph_text]
 			);
 
 			return response()->json(['success' => true]);
@@ -29,7 +30,7 @@
 
 		function getText($paragraphNumber)
 		{
-			$text = SaveText::where('paragraph_number', $paragraphNumber)->first();
+			$text = SaveText::where('paragraph_number', $paragraphNumber)->latest()->first();
 
 			return response()->json($text ? $text : ['error' => 'Text not found']);
 		}
@@ -86,12 +87,12 @@
 				file_put_contents($audiofile, $audioData);
 
 				$openai_results = self::openAI_transcribe($audiofile, $language);
-				$post_result= true;
+				$post_result = true;
 
 			} else {
 				$baseFilename = 'single_combined_' . time();
 				$openai_results = array();
-				$post_result= false;
+				$post_result = false;
 			}
 
 			return response()->json(["result" => $post_result, "message" => "File uploaded", "base_filename" => $baseFilename, "openai_results" => $openai_results]);
@@ -368,5 +369,40 @@
 				return array('complete' => array('complete' => array('text' => 'voice recognition failed.')), 'complete_result' => $complete, 'curl_error' => $curl_error);
 			}
 		}
+
+		function find_last_paragraph_with_text()
+		{
+			//find last paragraph that has text in it
+			$last_paragraph = SaveText::where('paragraph_text', '!=', '')->orderBy('paragraph_number', 'desc')->first();
+			return response()->json($last_paragraph);
+
+		}
+
+
+		public function undoText(Request $request)
+		{
+			$request->validate([
+				'paragraph_number' => 'required|integer',
+			]);
+
+			$latestText = SaveText::where('paragraph_number', $request->paragraph_number)
+				->latest()
+				->first();
+
+			if ($latestText) {
+				// Delete the most recent entry
+				$latestText->delete();
+
+				// Attempt to get the next most recent entry
+				$previousText = SaveText::where('paragraph_number', $request->paragraph_number)
+					->latest()
+					->first();
+
+				return response()->json(['success' => true, 'paragraph_text' => $previousText ? $previousText->paragraph_text : '']);
+			}
+
+			return response()->json(['success' => false, 'message' => 'No text found to undo.']);
+		}
+
 	}
 

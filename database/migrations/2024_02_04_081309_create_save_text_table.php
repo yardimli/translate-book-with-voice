@@ -12,7 +12,7 @@
 		{
 			Schema::create('save_texts', function (Blueprint $table) {
 				$table->id();
-				$table->string('paragraph_number')->default(0);
+				$table->integer('paragraph_number')->default(0);
 				$table->longText('paragraph_text')->nullable();
 				$table->timestamps();
 			});

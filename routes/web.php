@@ -17,7 +17,7 @@
 	*/
 
 	Route::get('/', function () {
-		return view('welcome');
+		return view('choose-device');
 	});
 
 	Auth::routes();
@@ -34,6 +34,12 @@
 	Route::post('/save-text', [VoiceController::class, 'saveText'])->name('save-text');
 	Route::get('/get-text/{paragraphNumber}', [VoiceController::class, 'getText'])->name('get-text');
 	Route::get('/export-text', [VoiceController::class, 'exportText']);
+
+	Route::get('/ipad-write', [DocxViewController::class, 'ipad_show'])->name('page.ipad-write');
+	Route::get('/find-last-paragraph-with-text', [VoiceController::class, 'find_last_paragraph_with_text'])->name('find-last-paragraph-with-text');
+	Route::post('/undo-text', [VoiceController::class, 'undoText']);
+
+
 
 	Route::get('/write-with-chunks', [DocxViewController::class, 'show'])->name('page.write-with-chunks');
 
