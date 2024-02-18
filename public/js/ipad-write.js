@@ -1,5 +1,86 @@
 let currentEditingParagraph = 1;
 let disableAutoSave = false;
+let lastSavedText = '';
+
+
+function disableButtonsAndShowSpinner(button_id) {
+	$('#' + button_id).prop('disabled', true);
+	$('#' + button_id + '_spinner').css('display', 'inline-block');
+	$('#' + button_id + '_spinner').show();
+}
+
+function enableButtonsAndHideSpinner(button_id) {
+	$('#' + button_id).prop('disabled', false);
+	$('#' + button_id + '_spinner').css('display', 'none');
+	$('#' + button_id + '_spinner').hide();
+}
+
+
+function generateTextRequest(output_field_id, button_id, url_to_load) {
+	disableButtonsAndShowSpinner(button_id);
+	console.log('disable next button 1');
+	disableButtonsAndShowSpinner('nextBtn');
+	
+	const eventSource = new EventSource(url_to_load);
+	
+	let inputField = document.getElementById(output_field_id);
+	inputField.value = inputField.value + "\n";
+	
+	eventSource.onmessage = function (e) {
+		//console.log(e.data);
+		if (e.data === '[DONE]') {
+			enableButtonsAndHideSpinner(button_id);
+			eventSource.close();
+			inputField.value = inputField.value.trim();
+		} else {
+			
+			let data_json = JSON.parse(e.data);
+			if (data_json.errors !== undefined) {
+				// handle your errors here
+				console.log(data_json.errors);
+				
+				let errors = data_json.errors;
+				let errorMessages = '';
+				for (let field in errors) {
+					if (errors.hasOwnProperty(field)) {
+						errorMessages += field + ': ' + errors[field].join(', ') + '\n';
+					}
+				}
+				alert(errorMessages);
+				
+				enableButtonsAndHideSpinner(button_id);
+				eventSource.close();
+			} else if (data_json.status !== undefined && data_json.status === "[DONE]") {
+				
+				if (typeof data_json.chat_response !== 'undefined') {
+					inputField.value += data_json.chat_response.replace(/(?:\r\n|\r|\n)/g, '<br>');
+				}
+				enableButtonsAndHideSpinner(button_id);
+				eventSource.close();
+				inputField.value = inputField.value.trim();
+			} else {
+				let txt = data_json.choices[0].delta.content;
+				if (txt !== undefined) {
+					inputField.value += txt; // txt.replace(/(?:\r\n|\r|\n)/g, ' ');
+					inputField.scrollTop = inputField.scrollHeight;
+				}
+			}
+		}
+	};
+	
+	eventSource.onerror = function (e) {
+		console.log(e);
+		if (!generating_image) {
+			console.log('enable next button 2');
+			enableButtonsAndHideSpinner('nextBtn');
+		}
+		enableButtonsAndHideSpinner(button_id);
+		// inputField.value = '';
+		eventSource.close();
+	};
+	
+	}
+
 
 function scrollToPA(number) {
 	// The container with overflow auto
@@ -228,5 +309,15 @@ $(document).ready(function () {
 			}
 		});
 	});
+	
+	
+	$('#translateWithAIBtn').on('click', function (e) {
+		let url_to_load = '/generate-text/?paragraph_number=' + currentEditingParagraph + '&type=translate&text=' + encodeURIComponent($("#textareaInput").val());
+		
+		disableButtonsAndShowSpinner('nextBtn');
+		console.log('disable next button 2');
+		generateTextRequest('textareaInput', 'translateWithAIBtn', url_to_load);
+	});
+	
 	
 });

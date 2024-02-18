@@ -38,6 +38,7 @@
 	Route::get('/ipad-write', [DocxViewController::class, 'ipad_show'])->name('page.ipad-write');
 	Route::get('/find-last-paragraph-with-text', [VoiceController::class, 'find_last_paragraph_with_text'])->name('find-last-paragraph-with-text');
 	Route::post('/undo-text', [VoiceController::class, 'undoText']);
+	Route::get('/generate-text', [DocxViewController::class, 'generateTextRequest'])->name('generate-text');
 
 
 

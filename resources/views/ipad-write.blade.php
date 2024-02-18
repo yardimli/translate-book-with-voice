@@ -49,7 +49,10 @@
 			<div class="mb-1 mt-1">
 				<button class="btn btn-primary" id="undoBtn">Geri Al</button>
 				<button class="btn btn-primary" id="saveBtn">Sakla</button>
+				
+				<button class="btn btn-secondary" id="translateWithAIBtn">AI ile Cevir</button>
 				<button class="btn btn-secondary" id="exportBtn" onclick="exportText()">Dışa Aktar</button>
+				<br>
 				<span id="writing-paragraph-hint">Etkin Paragraf: 1</span>
 				<span id="hint2"></span>
 			</div>
