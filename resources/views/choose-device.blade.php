@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="app_url" content="{{env('APP_URL')}}">
-	<title>Write With Voice</title>
+	<title>Ses ile Yazma</title>
 	
 	{{--  jQuery, popper.js, and Bootstrap JS  --}}
 	<script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>

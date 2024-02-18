@@ -1,4 +1,5 @@
 let currentEditingParagraph = 1;
+let disableAutoSave = false;
 
 function scrollToPA(number) {
 	// The container with overflow auto
@@ -32,19 +33,30 @@ function scrollToPA(number) {
 }
 
 function autoSave() {
+	if (disableAutoSave) {
+		console.log('Auto-save is disabled');
+		$("#hint2").text("Yukleme sürerken, otomatik kayıt devre dışı");
+		setTimeout(function () {
+			$("#hint2").text("");
+		},1000);
+		return;
+	}
+	
 	let text = $("#textareaInput").val();
 	
 	if (text === lastSavedText) {
 		console.log('No changes to save');
+		$("#hint2").text("Değişiklik yok");
 		return;
 	}
 	
 	if (text === '') {
 		console.log('No text to save');
+		$("#hint2").text("Kaydedilecek metin yok");
 		return;
 	}
 	
-	$("#saveBtn").text("Saklaniyor...");
+	$("#saveBtn").text("Saklanıyor...");
 	
 	// Prepare the data to be sent
 	let data = {
@@ -53,30 +65,36 @@ function autoSave() {
 		_token: $('meta[name="csrf-token"]').attr('content') // Include CSRF token
 	};
 	
+	disableAutoSave = true;
 	$.ajax({
 		url: '/save-text',
 		type: 'POST',
 		data: data,
 		success: function (response) {
 			console.log('Auto-saved successfully');
+			$("#hint2").text("Otomatik kaydedildi");
 			lastSavedText = text;
+			disableAutoSave = false;
 			$("#saveBtn").text("Sakla");
 			// Optionally update the UI to inform the user of the save
+			
 		},
 		error: function (xhr, status, error) {
 			console.error('Error auto-saving:', error);
 			$("#saveBtn").text("Sakla");
-			$("#recognitionHistory").prepend(`<span>Auto-save failed.</span><br>`);
-			$("#recognitionHistory").prepend(`<span>${error}</span><br>`);
+			disableAutoSave = false;
+			$("#hint2").html('auto save error: '+ error);
 		}
 	});
 }
 
 function loadParagraphData(paragraphNumber) {
+	disableAutoSave = true;
 	$.ajax({
 		url: '/get-text/' + paragraphNumber,
 		type: 'GET',
 		success: function (response) {
+			disableAutoSave = false;
 			if (response.error) {
 				$("#textareaInput").val('');
 			} else if (response.paragraph_text) {
@@ -85,7 +103,9 @@ function loadParagraphData(paragraphNumber) {
 			}
 		},
 		error: function (xhr, status, error) {
+			disableAutoSave = false;
 			console.error('Error loading data:', error);
+			$("#hint2").html('load paragraph data error: '+ error);
 		}
 	});
 	
@@ -96,6 +116,7 @@ function loadParagraphData(paragraphNumber) {
 			url: '/get-text/' + (paragraphNumberInt - 1),
 			type: 'GET',
 			success: function (response) {
+				disableAutoSave = false;
 				if (response.error) {
 					$("#prevParagraphText").html('');
 				} else if (response.paragraph_text) {
@@ -107,7 +128,9 @@ function loadParagraphData(paragraphNumber) {
 				}
 			},
 			error: function (xhr, status, error) {
+				disableAutoSave = false;
 				console.error('Error loading data:', error);
+				$("#hint2").html('load paragraph data error: '+ error);
 			}
 		});
 	} else {
@@ -121,12 +144,15 @@ function exportText() {
 }
 
 function loadLastParagraphWithText() {
+	disableAutoSave = true;
 	$.ajax({
 		url: '/find-last-paragraph-with-text',
 		type: 'GET',
 		success: function (response) {
+			disableAutoSave = false;
 			if (response.error) {
 				console.error('Error finding last paragraph with text:', response.error);
+				$("#hint2").html('load last paragraph with text error: '+ response.error);
 			} else if (response.paragraph_number) {
 				currentEditingParagraph = response.paragraph_number;
 				
@@ -136,6 +162,8 @@ function loadLastParagraphWithText() {
 			}
 		},
 		error: function (xhr, status, error) {
+			disableAutoSave = false;
+			$("#hint2").html('load last paragraph with text error: '+ error);
 			console.error('Error finding last paragraph with text:', error);
 		}
 	});
@@ -157,6 +185,10 @@ $(document).ready(function () {
 		loadLastParagraphWithText();
 	}, 500);
 	
+	setInterval(function () {
+		autoSave();
+	}, 5000);
+	
 	
 	$("#saveBtn").on('click', function () {
 		autoSave();
@@ -164,6 +196,8 @@ $(document).ready(function () {
 	
 	
 	$(".book-text").on('click', function () {
+		autoSave();
+		
 		let paragraphNumber = $(this).data('pa-number');
 		scrollToPA(paragraphNumber);
 		$("#textareaInput").val('');

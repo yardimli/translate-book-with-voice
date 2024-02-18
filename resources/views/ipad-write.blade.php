@@ -43,7 +43,7 @@
 			
 			</div>
 			
-			<textarea class="form-control mt-2" id="textareaInput" rows="10" placeholder="Enter text here..."
+			<textarea class="form-control mt-2" id="textareaInput" rows="10" placeholder="Buraya metin girin..."
 			          style="height: calc(100vh - 300px); resize: none;"></textarea>
 			
 			<div class="mb-1 mt-1">
@@ -51,6 +51,7 @@
 				<button class="btn btn-primary" id="saveBtn">Sakla</button>
 				<button class="btn btn-secondary" id="exportBtn" onclick="exportText()">Dışa Aktar</button>
 				<span id="writing-paragraph-hint">Etkin Paragraf: 1</span>
+				<span id="hint2"></span>
 			</div>
 		</div>
 		<div class="col-6">
