@@ -43,9 +43,6 @@
 			
 			</div>
 			
-			<textarea class="form-control mt-2" id="textareaInput" rows="10" placeholder="Buraya metin girin..."
-			          style="height: calc(100vh - 300px); resize: none;"></textarea>
-			
 			<div class="mb-1 mt-1">
 				<button class="btn btn-primary" id="undoBtn">Geri Al</button>
 				<button class="btn btn-primary" id="saveBtn">Sakla</button>
@@ -56,6 +53,11 @@
 				<span id="writing-paragraph-hint">Etkin Paragraf: 1</span>
 				<span id="hint2"></span>
 			</div>
+			
+			
+			<textarea class="form-control mt-2" id="textareaInput" rows="10" placeholder="Buraya metin girin..."
+			          style="height: calc(100vh - 300px); resize: none;"></textarea>
+			
 		</div>
 		<div class="col-6">
 			<div class="docx-content" id="docx-content"
