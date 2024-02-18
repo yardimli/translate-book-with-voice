@@ -27,7 +27,7 @@
 				<p class="card-text" style="font-size: 30px;">Konuşmayı metne dönüştürmek için sunucunun AI'sını kullanın.
 				</p>
 				<div style="text-align: center;">
-				<img src="{{ asset('images/laptop.jpg') }}" alt="desktop" style="height: 40vh;">
+				<img src="{{ asset('images/laptop.jpg') }}" alt="desktop" style="max-height: 40vh; max-width: 40vw;">
 				</div>
 				<a href="/write" class="btn btn-lg btn-primary mt-2" style="font-size: 30px;">Başlamak için tıklayın
 				</a>
@@ -42,7 +42,7 @@
 				<p class="card-text" style="font-size: 30px;">iPad'in sesli yazma özelliğini kullanın, otomatik kaydetme
 					özelliklerinin ve yarı ekran düzeninin kullanın.</p>
 				<div style="text-align: center;">
-					<img src="{{ asset('images/ipad.jpg') }}" alt="desktop" style="height: 40vh;">
+					<img src="{{ asset('images/ipad.jpg') }}" alt="desktop" style="max-height: 40vh; max-width: 40vw;">
 				</div>
 				<a href="/ipad-write" class="btn btn-lg btn-primary mt-2" style="font-size: 30px;">Başlamak için tıklayın
 				</a>
