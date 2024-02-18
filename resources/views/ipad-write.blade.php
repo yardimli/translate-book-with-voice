@@ -40,8 +40,8 @@
 		<div class="col-6">
 			
 			<div class="mb-1 mt-1">
-				<button class="btn btn-primary" id="undoBtn">Geri Al</button>
-				<button class="btn btn-primary" id="saveBtn">Sakla</button>
+				<button class="btn btn-primary" id="undoBtn" style="min-width: 100px;">Geri Al</button>
+				<button class="btn btn-primary" id="saveBtn" style="min-width: 100px;">Sakla</button>
 				
 				<button class="btn btn-secondary" id="translateWithAIBtn">AI ile Cevir</button>
 				<button class="btn btn-secondary" id="exportBtn" onclick="exportText()">Dışa Aktar</button>
