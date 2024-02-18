@@ -73,7 +73,7 @@
 				foreach ($section->getElements() as $element) {
 					if (method_exists($element, 'getText')) {
 						$paragraph_count++;
-						$text .= "<div style='cursor:pointer;' class='book-text' data-pa-number=\"" . $paragraph_count . "\"><p><div style='font-weight: bold; text-align: right;'>PA #" . $paragraph_count . "</div>" . $element->getText() . "</p><p id='translated_text_". $paragraph_count ."'></p></div>\n";
+						$text .= "<div style='cursor:pointer;' class='book-text' data-pa-number=\"" . $paragraph_count . "\"><p><div style='font-weight: bold; text-align: right;'>PA #" . $paragraph_count . "</div>" . $element->getText() . "</p><p id='translated_text_" . $paragraph_count . "'></p></div>\n";
 					}
 				}
 			}
@@ -298,7 +298,7 @@
 					if (method_exists($element, 'getText')) {
 						$paragraph_count++;
 
-						if ($paragraph_count === $paragraph_number - 2 || $paragraph_count === $paragraph_number - 1) {
+						if ($paragraph_count === $paragraph_number - 4 || $paragraph_count === $paragraph_number - 3 || $paragraph_count === $paragraph_number - 2 || $paragraph_count === $paragraph_number - 1) {
 
 							$translated_text = SaveText::where('paragraph_number', $paragraph_count)->latest()->first();
 							if ($translated_text) {
@@ -312,8 +312,7 @@
 									'role' => 'assistant',
 									'content' => $translated_text['paragraph_text']
 								];
-							} else
-							{
+							} else {
 								Log::info('paragraph_count: ' . $paragraph_count . ' text not found');
 							}
 						} else
