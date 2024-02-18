@@ -35,7 +35,7 @@
 
 
 
-<div style="width: 100vw; max-width: 1280px; margin:0 auto; height: 100vh; overflow: hidden;">
+<div style="width: 100vw; max-width: 1280px; margin:0 auto; height: 90vh; overflow: hidden;">
 	<div class="row">
 		<div class="col-6">
 			
